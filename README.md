@@ -1,4 +1,4 @@
-> This plugin will not be released on Poggit because of rule violation [S4](https://poggit.pmmp.io/rules.edit) but it will still be under active development!
+> This plugin will not be released on Poggit because of rule violation [S4: Use permissions to block commands](https://poggit.pmmp.io/rules.edit) but it will still be under active development!
 
 # General
 **Prevent players from using specified commands**
