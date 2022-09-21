@@ -10,6 +10,12 @@ use pocketmine\event\server\CommandEvent;
 
 class Main extends PluginBase implements Listener {
 
+	// TODO: Implement some of the features available on this plugin
+	// @see https://github.com/TwistedAsylumMC/CommandBlockerX
+	// @see https://github.com/TitaniumLB6571/TitanCommandBlocker
+	// @see https://github.com/fernanACM/WorldCommandBlocker
+	// @see https://github.com/Laith98Dev/BanCommands
+
 	private array $blockedCommands = [];
 
 	protected function onEnable(): void {
