@@ -1,0 +1,9 @@
+---
+name: CommandBlocker
+version: 0.0.1+alpha
+main: NhanAZ\CommandBlocker\Main
+api: 4.0.0
+website: https://github.com/NhanAZ
+description: Prevent players from using specified commands
+author: NhanAZ
+...

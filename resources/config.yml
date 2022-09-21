@@ -1,0 +1,4 @@
+---
+# # List of blocked commands without the slash
+blockedCommands: ["ver"]
+...
