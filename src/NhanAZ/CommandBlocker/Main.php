@@ -40,7 +40,7 @@ class Main extends PluginBase implements Listener {
 		$cmd = strtolower($cmd[0]);
 		$cmd = str_replace(["\"", "'", "pocketmine:"], "", $cmd);
 		if (in_array($cmd, $this->blockedCommands)) {
-			$event->getSender()->sendMessage("§cBanned command: §b{$cmd}");
+			$event->getSender()->sendMessage("§f[§aCommandBlocker§f] §cBanned command: §b/{$cmd}");
 			$event->cancel();
 		}
 	}
