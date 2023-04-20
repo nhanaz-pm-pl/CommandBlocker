@@ -1,8 +1,14 @@
-> This plugin will not be released on Poggit because of rule violation [S4: Use permissions to block commands](https://poggit.pmmp.io/rules.edit) but it will still be under active development!
-
 # General
 **Prevent players from using specified commands**
 
 # Contact
 [![Discord](https://img.shields.io/discord/986553214889517088?label=discord&color=7289DA&logo=discord)](https://discord.gg/j2X83ujT6c)\
 **You can contact me directly via Discord `NhanAZ#9115`**
+
+<!--
+- TODO: Implement some of the features available on this plugin
++ @see https://github.com/TwistedAsylumMC/CommandBlockerX
++ @see https://github.com/TitaniumLB6571/TitanCommandBlocker
++ @see https://github.com/fernanACM/WorldCommandBlocker
++ @see https://github.com/Laith98Dev/BanCommands
+-->
