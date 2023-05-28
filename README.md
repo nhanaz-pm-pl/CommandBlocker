@@ -1,5 +1,5 @@
 # General
-**Prevent players from using specified commands**
+**Block players using specified commands**
 
 # What's new?
 - Prevent Alias Attacks and Format Attacks
