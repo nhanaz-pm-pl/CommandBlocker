@@ -12,22 +12,28 @@ class Main extends PluginBase implements Listener {
 
 	private array $blockedCommands = [];
 
+	private array $blockedPermissions = [];
+
 	protected function onEnable(): void {
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		$this->saveDefaultConfig();
 		$this->blockedCommands = $this->getConfig()->get("blockedCommands");
-		foreach ($this->blockedCommands as $cmd) {
-			$cmdMap = $this->getServer()->getCommandMap()->getCommand($cmd);
-			if (is_null($cmdMap)) {
-				$this->getLogger()->warning("Unknown command: $cmd");
-				$key = array_search($cmd, $this->blockedCommands);
+		foreach ($this->blockedCommands as $command) {
+			$commandMap = $this->getServer()->getCommandMap()->getCommand($command);
+			if (is_null($commandMap)) {
+				$this->getLogger()->warning("Unknown command: $command");
+				$key = array_search($command, $this->blockedCommands);
 				unset($this->blockedCommands[$key]);
 				$this->getConfig()->set("blockedCommands", array_values($this->blockedCommands));
 				continue;
 			}
-			$aliases = $cmdMap->getAliases();
+			$aliases = $commandMap->getAliases();
 			foreach ($aliases as $aliase) {
-				array_push($this->blockedCommands, $aliase, $cmdMap->getName(), $cmdMap->getLabel());
+				array_push($this->blockedCommands, $aliase, $commandMap->getName(), $commandMap->getLabel());
+			}
+			$permissions = $commandMap->getPermissions();
+			foreach ($permissions as $permission) {
+				array_push($this->blockedPermissions, $permission);
 			}
 		}
 	}
@@ -35,12 +41,26 @@ class Main extends PluginBase implements Listener {
 	/**
 	 * @handleCancelled true
 	 */
-	public function onCmd(CommandEvent $event): void {
-		$cmd = explode(" ", $event->getCommand());
-		$cmd = strtolower($cmd[0]);
-		$cmd = str_replace(["\"", "'", "pocketmine:"], "", $cmd);
-		if (in_array($cmd, $this->blockedCommands)) {
-			$event->getSender()->sendMessage("§f[§aCommandBlocker§f] §cBanned command: §b/{$cmd}");
+	public function onCommandEvent(CommandEvent $event): void {
+		$command = $event->getCommand();
+		$commandMap = $this->getServer()->getCommandMap()->getCommand($command);
+		$blockedCommand = false;
+		if (!is_null($commandMap)) {
+			$permissions = $commandMap->getPermissions();
+			foreach ($permissions as $permission) {
+				if (in_array($permission, $this->blockedPermissions)) {
+					$blockedCommand = true;
+				}
+			}
+		}
+		$command = explode(" ", $command);
+		$command = strtolower($command[0]);
+		$command = str_replace(["\"", "'", "pocketmine:"], "", $command);
+		if (in_array($command, $this->blockedCommands)) {
+			$blockedCommand = true;
+		}
+		if ($blockedCommand) {
+			$event->getSender()->sendMessage("§f[§aCommandBlocker§f] §cBanned command: §b/{$command}");
 			$event->cancel();
 		}
 	}

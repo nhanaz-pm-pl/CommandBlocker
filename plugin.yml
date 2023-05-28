@@ -1,6 +1,6 @@
 ---
 name: CommandBlocker
-version: 0.0.1+alpha
+version: 0.0.1
 main: NhanAZ\CommandBlocker\Main
 api: 4.0.0
 website: https://github.com/NhanAZ
