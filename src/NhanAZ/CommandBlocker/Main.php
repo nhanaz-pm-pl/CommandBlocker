@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace NhanAZ\CommandBlocker;
 
+use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\server\CommandEvent;
-use pocketmine\plugin\PluginBase;
 
 class Main extends PluginBase implements Listener
 {
