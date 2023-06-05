@@ -18,25 +18,21 @@ class Main extends PluginBase implements Listener {
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		$this->saveDefaultConfig();
 		$this->blockedCommands = $this->getConfig()->get("blockedCommands");
-		foreach ($this->blockedCommands as $command) {
-			$commandMap = $this->getServer()->getCommandMap()->getCommand($command);
-			if (is_null($commandMap)) {
-				$this->getLogger()->warning("Unknown command: $command");
-				$key = array_search($command, $this->blockedCommands);
-				unset($this->blockedCommands[$key]);
-				$this->getConfig()->set("blockedCommands", array_values($this->blockedCommands));
-				continue;
-			}
-			$aliases = $commandMap->getAliases();
-			foreach ($aliases as $aliase) {
-				array_push($this->blockedCommands, $aliase, $commandMap->getName(), $commandMap->getLabel());
-			}
-			$permissions = $commandMap->getPermissions();
-			foreach ($permissions as $permission) {
-				array_push($this->blockedPermissions, $permission);
-			}
-		}
-	}
+        foreach ($this->blockedCommands as $command) {
+            $commandMap = $this->getServer()->getCommandMap()->getCommand($command);
+            if (is_null($commandMap)) {
+                $this->getLogger()->warning("Unknown command: $command");
+                $key = array_search($command, $this->blockedCommands);
+                unset($this->blockedCommands[$key]);
+                $this->getConfig()->set("blockedCommands", array_values($this->blockedCommands));
+                continue;
+            }
+            $aliases = $commandMap->getAliases();
+            $permissions = $commandMap->getPermissions();
+            $this->blockedCommands = array_merge($this->blockedCommands, $aliases, [$commandMap->getName()], [$commandMap->getLabel()]);
+            $this->blockedPermissions = array_merge($this->blockedPermissions, $permissions);
+        }
+    }
 
 	/**
 	 * @handleCancelled true
@@ -47,11 +43,9 @@ class Main extends PluginBase implements Listener {
 		$blockedCommand = false;
 		if (!is_null($commandMap)) {
 			$permissions = $commandMap->getPermissions();
-			foreach ($permissions as $permission) {
-				if (in_array($permission, $this->blockedPermissions)) {
-					$blockedCommand = true;
-				}
-			}
+			if (!empty(array_intersect($permissions, $this->blockedPermissions))) {
+                $blockedCommand = true;
+            }
 		}
 		$command = explode(" ", $command);
 		$command = strtolower($command[0]);

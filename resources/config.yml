@@ -1,5 +1,5 @@
 ---
 # List of blocked commands without the slash and separated by ,
 # For example: blockedCommands: ["version", "stop"]
-blockedCommands: []
+blockedCommands: ["say"]
 ...
