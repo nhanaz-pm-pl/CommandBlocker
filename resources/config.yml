@@ -1,5 +1,10 @@
 ---
-# List of blocked commands without the slash and separated by ,
-# For example: blockedCommands: ["version", "stop"]
-blockedCommands: []
+# No support for banning commands executed by console! So please pay attention to commands that can execute another command through the console. Players in the server can exploit this to bypass CommandBlocker.
+# Examples of how players exploit the vulnerability: /rca gamemode c NhanAZ
+# Assuming the /gamemode command is banned worldwide, the player can still use the /rca command to execute the /gamemode command at the console.
+
+blockedCommands:
+  a: ["x"] # Ban command /a in "x" world.
+  b: ["x", "y"] # Ban command /b in "x' and "y" world.
+  c: [] # Ban command /c in all worlds.
 ...
