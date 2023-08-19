@@ -11,7 +11,6 @@ warn:
 worlds:
   world1:
     command1:
-      permission: commandblocker.command1
       # Arguments are not used in this command
       arguments: []
       limit:
