@@ -10,14 +10,14 @@ use pocketmine\Server;
 class CommandBlocker {
 
     private string $command;
-    private array $arguments;
-    private Limit $limit;
+    private ?array $arguments;
+    private ?Limit $limit;
     private array $permissions;
 
     private array $triggered = [];
 
 
-    public function __construct(string $command, array $arguments = [], ?Limit $limit = null) {
+    public function __construct(string $command, ?array $arguments = null, ?Limit $limit = null) {
         $this->command = $command;
         $this->arguments = $arguments;
         $this->limit = $limit;
@@ -28,7 +28,7 @@ class CommandBlocker {
         return $this->command;
     }
 
-    public function getArguments(): array {
+    public function getArguments(): ?array {
         return $this->arguments;
     }
 
@@ -40,7 +40,15 @@ class CommandBlocker {
         return $this->permissions;
     }
 
-    public function compareArguments(array $arguments): bool {
+    public function hasLimit() :bool {
+        return $this->limit !== null;
+    }
+
+    public function hasArguments() :bool {
+        return $this->arguments !== null;
+    }
+
+    public function isArgumentsBlocked(array $arguments): bool {
         if (count($this->arguments) !== count($arguments)) {
             return false;
         }
@@ -59,7 +67,12 @@ class CommandBlocker {
 
     public function trigger(Player $player): void {
         $now = time();
-        $lastTrigger = $this->triggered[$player->getName()] ?? 0;
+        if(!isset($this->triggered[$player->getName()])) {
+            $this->triggered[$player->getName()] = $now;
+            return;
+        }
+
+        $lastTrigger = $this->triggered[$player->getName()];
         $limit = $this->getLimit();
         if($now - $lastTrigger > $limit->getInterval()) {
             $this->triggered[$player->getName()] = $now;
