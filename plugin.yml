@@ -5,5 +5,7 @@ main: NhanAZ\CommandBlocker\Main
 api: 5.0.0
 website: https://github.com/NhanAZ
 description: Block players using specified commands
-author: NhanAZ
+authors:
+  - NhanAZ
+  - phuongaz
 ...
