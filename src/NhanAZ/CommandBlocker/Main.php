@@ -51,6 +51,7 @@ class Main extends PluginBase implements Listener {
 		$command = strtolower($command[0]);
 		$commandMap = $this->getServer()->getCommandMap()->getCommand($command);
 		$blockedCommand = false;
+		$allAlias = [];
 		if (!is_null($commandMap)) {
 			$permissions = $commandMap->getPermissions();
 			$allAlias = array_merge($commandMap->getAliases(), [$commandMap->getName()], [$commandMap->getLabel()]);
