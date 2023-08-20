@@ -47,7 +47,6 @@ class EventHandler implements Listener {
             $blockerEvent = new CommandBlockerEvent($sender, $matchingBlocker);
             $blockerEvent->call();
             if ($matchingBlocker->hasLimit()) {
-                var_dump("IS LIMIT");
                 $matchingBlocker->trigger($sender);
             }
         }
