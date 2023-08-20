@@ -3,8 +3,25 @@
 # Examples of how players exploit the vulnerability: /rca gamemode c NhanAZ
 # Assuming the /gamemode command is banned worldwide, the player can still use the /rca command to execute the /gamemode command at the console.
 
-blockedCommands:
-  a: ["x"] # Ban command /a in "x" world.
-  b: ["x", "y"] # Ban command /b in "x' and "y" world.
-  c: [] # Ban command /c in all worlds.
+# Notification will appear when the player violates
+language: "eng"
+
+worlds:
+  world:
+    gamemode:
+      # Arguments are not used in this command
+      arguments: ["1"]
+      limit:
+        # Time interval (seconds)
+        interval: 1
+        # Limit when players enter more than the specified number of times
+        amount: 4
+        # Action when the limit is reached (kick, ban, warn)
+        action: ban
+    clan:
+      limit:
+        interval: 1
+        amount: 4
+        action: ban
+  world1: ["gamemode", "about"]
 ...

@@ -1,9 +1,22 @@
 ---
 name: CommandBlocker
-version: 1.0.0
+version: 2.0.0
 main: NhanAZ\CommandBlocker\Main
 api: 5.0.0
 website: https://github.com/NhanAZ
 description: Block players using specified commands
-author: NhanAZ
+authors:
+  - NhanAZ
+  - phuongaz
+
+permissions:
+  commandblocker.command:
+    description: Allow players to use the /commandblocker
+    default: true
+  commandblocker.command.list:
+    description: Allow players to use the /commandblocker list
+    default: true
+  commandblocker.command.worlds:
+    description: Allow players to use the /commandblocker worlds
+    default: true
 ...
