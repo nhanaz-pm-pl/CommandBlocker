@@ -6,6 +6,7 @@ namespace NhanAZ\CommandBlocker\listener;
 
 use NhanAZ\CommandBlocker\blocker\Worlds;
 use NhanAZ\CommandBlocker\listener\event\CommandBlockerEvent;
+use NhanAZ\CommandBlocker\utils\LanguageEnums;
 use NhanAZ\CommandBlocker\utils\LanguageTrait;
 use pocketmine\event\Listener;
 use pocketmine\event\server\CommandEvent;
@@ -58,7 +59,7 @@ class EventHandler implements Listener {
         }
         $blocker = $event->getCommandBlocker();
         $player = $event->getPlayer();
-        $warnMessage = self::translateString(self::WARN_MESSAGE, [$blocker->getBlockedCommand()]);
+        $warnMessage = self::translateString(LanguageEnums::WARN_MESSAGE, [$blocker->getBlockedCommand()]);
         $player->sendMessage($warnMessage);
     }
 }

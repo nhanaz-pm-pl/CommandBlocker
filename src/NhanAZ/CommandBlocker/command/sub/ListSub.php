@@ -8,6 +8,7 @@ use CortexPE\Commando\args\RawStringArgument;
 use CortexPE\Commando\BaseSubCommand;
 use CortexPE\Commando\exception\ArgumentOrderException;
 use NhanAZ\CommandBlocker\blocker\Worlds;
+use NhanAZ\CommandBlocker\utils\LanguageEnums;
 use NhanAZ\CommandBlocker\utils\LanguageTrait;
 use NhanAZ\CommandBlocker\utils\Utils;
 use pocketmine\command\CommandSender;
@@ -29,11 +30,11 @@ class ListSub extends BaseSubCommand {
         $worldName = $args["world"];
         $world = Utils::getWorldLoadedByName($worldName);
         if($world === null) {
-            $sender->sendMessage(self::translateString(self::WORLD_NOT_FOUND, [$worldName]));
+            $sender->sendMessage(self::translateString(LanguageEnums::WORLD_NOT_FOUND, [$worldName]));
             return;
         }
         if(Worlds::get($world) === null) {
-            $sender->sendMessage(self::translateString(self::DONT_HAVE_BLOCKER, [$worldName]));
+            $sender->sendMessage(self::translateString(LanguageEnums::DONT_HAVE_BLOCKER, [$worldName]));
             return;
         }
 
@@ -43,7 +44,7 @@ class ListSub extends BaseSubCommand {
             if($blocker->hasCommand($command)) {
                 $commandBlocker = $blocker->getCommandBlocker($command);
                 if($commandBlocker === null) {
-                    $sender->sendMessage(self::translateString(self::DONT_HAVE_BLOCKER_COMMAND, [$command]));
+                    $sender->sendMessage(self::translateString(LanguageEnums::DONT_HAVE_BLOCKER_COMMAND, [$command]));
                     return;
                 }
                 $amount = 0;
@@ -60,10 +61,10 @@ class ListSub extends BaseSubCommand {
                 if(count($commandBlocker->getAliases()) > 0) {
                     $aliases = implode(", ", $commandBlocker->getAliases());
                 }
-                $sender->sendMessage(self::translateString(self::COMMAND_BLOCKED_NAME, [$command]));
-                $sender->sendMessage(self::translateString(self::COMMAND_BLOCKED_ARGS, [$args]));
-                $sender->sendMessage(self::translateString(self::COMMAND_BLOCKED_ALIAS, [$aliases]));
-                $sender->sendMessage(self::translateString(self::COMMAND_BLOCKED_LIMIT, [$amount, $time]));
+                $sender->sendMessage(self::translateString(LanguageEnums::COMMAND_BLOCKED_NAME, [$command]));
+                $sender->sendMessage(self::translateString(LanguageEnums::COMMAND_BLOCKED_ARGS, [$args]));
+                $sender->sendMessage(self::translateString(LanguageEnums::COMMAND_BLOCKED_ALIAS, [$aliases]));
+                $sender->sendMessage(self::translateString(LanguageEnums::COMMAND_BLOCKED_LIMIT, [$amount, $time]));
             }
         }
     }
