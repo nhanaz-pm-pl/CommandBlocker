@@ -8,4 +8,15 @@ description: Block players using specified commands
 authors:
   - NhanAZ
   - phuongaz
+
+permissions:
+  commandblocker.command:
+    description: Allow players to use the /commandblocker
+    default: true
+  commandblocker.command.list:
+    description: Allow players to use the /commandblocker list
+    default: true
+  commandblocker.command.worlds:
+    description: Allow players to use the /commandblocker worlds
+    default: true
 ...

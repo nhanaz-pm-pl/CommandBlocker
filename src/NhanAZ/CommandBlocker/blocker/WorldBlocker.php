@@ -38,6 +38,31 @@ class WorldBlocker {
         return null;
     }
 
+    public function getCommands() :array {
+        $commands = [];
+        foreach ($this->blocker as $blocker) {
+            $commands[] = $blocker->getCommand();
+        }
+        return $commands;
+    }
+
+    public function hasCommand(string $command) :bool {
+        foreach ($this->blocker as $blocker) {
+            if ($blocker->getCommand() === $command) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function toArray(): array {
+        $array = [];
+        foreach ($this->blocker as $blocker) {
+            $array[] = $blocker->toArray();
+        }
+        return $array;
+    }
+
     /**
      * @param CommandBlocker[] $commandBlockers
      *

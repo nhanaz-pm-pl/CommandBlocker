@@ -10,7 +10,7 @@ final class Limit {
 
     public function __construct(
         private readonly string $action,
-        private readonly int    $limit,
+        private readonly int    $amount,
         private readonly int $interval
     ) {}
 
@@ -33,18 +33,26 @@ final class Limit {
         return $this->action;
     }
 
-    public function getLimit() :int {
-        return $this->limit;
+    public function getAmount() :int {
+        return $this->amount;
     }
 
     public function getInterval() :int {
         return $this->interval;
     }
 
+    public function toArray() :array {
+        return [
+            "action" => $this->action,
+            "amount" => $this->amount,
+            "interval" => $this->interval
+        ];
+    }
+
     public static function fromArray(array $data) :Limit {
         return new Limit(
             $data["action"],
-            $data["limit"],
+            $data["amount"],
             $data["interval"]
         );
     }

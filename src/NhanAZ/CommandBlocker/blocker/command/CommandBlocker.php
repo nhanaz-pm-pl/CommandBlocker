@@ -21,7 +21,8 @@ class CommandBlocker {
         $this->command = $command;
         $this->arguments = $arguments;
         $this->limit = $limit;
-        $this->permissions = Server::getInstance()->getCommandMap()->getCommand($command)->getPermissions();
+        $commandMap = Server::getInstance()->getCommandMap()->getCommand($command);
+        $this->permissions = $commandMap !== null ? $commandMap->getPermissions() : [];
     }
 
     public function getCommand(): string {
@@ -38,6 +39,11 @@ class CommandBlocker {
 
     public function getPermissions(): array {
         return $this->permissions;
+    }
+
+    public function getAliases() :array {
+        $commandMap = Server::getInstance()->getCommandMap()->getCommand($this->getCommand());
+        return $commandMap !== null ? $commandMap->getAliases() : [];
     }
 
     public function hasLimit() :bool {
@@ -60,6 +66,15 @@ class CommandBlocker {
         return true;
     }
 
+    public function getBlockedCommand() :string {
+        $command = $this->getCommand();
+        $arguments = $this->getArguments();
+        if($arguments !== null) {
+            $command .= " " . implode("|", $arguments);
+        }
+        return $command;
+    }
+
     public function testPermission(array $permission): bool {
         $intersect = array_intersect($this->permissions, $permission);
         return !empty($intersect);
@@ -67,19 +82,38 @@ class CommandBlocker {
 
     public function trigger(Player $player): void {
         $now = time();
-        if(!isset($this->triggered[$player->getName()])) {
-            $this->triggered[$player->getName()] = $now;
+
+        if (!isset($this->triggered[$player->getName()])) {
+            $this->triggered[$player->getName()] = [
+                "lastTrigger" => $now,
+                "VL" => 0
+            ];
             return;
         }
 
-        $lastTrigger = $this->triggered[$player->getName()];
+        $lastTrigger = $this->triggered[$player->getName()]["lastTrigger"];
         $limit = $this->getLimit();
-        if($now - $lastTrigger > $limit->getInterval()) {
-            $this->triggered[$player->getName()] = $now;
+
+        if ($now - $lastTrigger >= $limit->getInterval()) {
+            $this->triggered[$player->getName()]["lastTrigger"] = $now;
+            $this->triggered[$player->getName()]["VL"] = 0;
+        } else {
+            $this->triggered[$player->getName()]["VL"]++;
         }
-        if($limit->getLimit() <= count($this->triggered)) {
+
+        if ($this->triggered[$player->getName()]["VL"] >= $limit->getAmount()) {
             $limit->handle($player);
         }
+    }
+
+
+    public function toArray() :array {
+        return [
+            "command" => $this->command,
+            "arguments" => $this->arguments ?? [],
+            "limit" => $this->limit?->toArray() ?? [],
+            "permissions" => $this->permissions,
+        ];
     }
 
 }

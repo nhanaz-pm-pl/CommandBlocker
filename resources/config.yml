@@ -4,15 +4,13 @@
 # Assuming the /gamemode command is banned worldwide, the player can still use the /rca command to execute the /gamemode command at the console.
 
 # Notification will appear when the player violates
-warn:
-  admins: true
-  console: true
+language: "eng"
 
 worlds:
-  world1:
-    command1:
+  world:
+    gamemode:
       # Arguments are not used in this command
-      arguments: []
+      arguments: ["1"]
       limit:
         # Time interval (seconds)
         interval: 1
@@ -20,4 +18,10 @@ worlds:
         amount: 4
         # Action when the limit is reached (kick, ban, warn)
         action: ban
+    clan:
+      limit:
+        interval: 1
+        amount: 4
+        action: ban
+  world1: ["gamemode", "about"]
 ...

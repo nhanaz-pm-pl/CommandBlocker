@@ -18,19 +18,19 @@ final class Worlds {
             self::$worlds = $map;
         }
 
-        return self::$worlds[spl_object_hash($world)] ??= self::load($world);
+        return self::$worlds[$world] ??= self::load($world);
     }
 
     public static function set(World $world, WorldBlocker $blocker) : void {
-        self::$worlds[spl_object_hash($world)] = $blocker;
+        self::$worlds[$world] = $blocker;
     }
 
     public static function remove(World $world) : void {
-        unset(self::$worlds[spl_object_hash($world)]);
+        unset(self::$worlds[$world]);
     }
 
     public static function has(World $world) : bool {
-        return isset(self::$worlds[spl_object_hash($world)]);
+        return isset(self::$worlds[$world]);
     }
 
     public static function load(World $world) : ?WorldBlocker {
