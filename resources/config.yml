@@ -4,6 +4,7 @@
 # Assuming the /gamemode command is banned worldwide, the player can still use the /rca command to execute the /gamemode command at the console.
 
 # Notification will appear when the player violates
+# Available languages: eng, vie
 language: "eng"
 
 worlds:
