@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace NhanAZ\CommandBlocker\blocker\command;
 
+use NhanAZ\CommandBlocker\utils\LanguageEnums;
+use NhanAZ\CommandBlocker\utils\LanguageTrait;
 use pocketmine\player\Player;
 
 final class Limit {
+    use LanguageTrait;
 
     private string $action;
     private int $amount;
@@ -21,14 +24,13 @@ final class Limit {
     public function handle(Player $player): void {
         switch ($this->action) {
             case "kick":
-                $player->kick("You are sending too many commands too quickly");
+                $player->kick(self::translateString(LanguageEnums::LIMIT_ACTION_KICK));
                 break;
             case "ban":
-                $player->getServer()->getNameBans()->addBan($player->getName(), "You are sending too many commands too quickly");
-                $player->kick("You are sending too many commands too quickly");
+                $player->getServer()->getNameBans()->addBan($player->getName(), self::translateString(LanguageEnums::LIMIT_ACTION_BAN));
                 break;
             case "warn":
-                $player->sendMessage("You are sending too many commands too quickly");
+                $player->sendMessage(self::translateString(LanguageEnums::LIMIT_ACTION_WARN));
                 break;
         }
     }

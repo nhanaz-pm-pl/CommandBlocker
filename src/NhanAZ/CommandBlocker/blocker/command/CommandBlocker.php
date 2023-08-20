@@ -116,4 +116,12 @@ class CommandBlocker {
         ];
     }
 
+    public static function create(string $command, array $array = []) :self {
+        return new self(
+            $command,
+            $array["arguments"] ?? null,
+            isset($array["limit"]) ? Limit::fromArray($array["limit"]) : null
+        );
+    }
+
 }

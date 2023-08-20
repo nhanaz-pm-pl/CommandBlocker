@@ -3,10 +3,10 @@
 # Examples of how players exploit the vulnerability: /rca gamemode c NhanAZ
 # Assuming the /gamemode command is banned worldwide, the player can still use the /rca command to execute the /gamemode command at the console.
 
-# Notification will appear when the player violates
-# Available languages: eng, vie
 language: "eng"
 
+#These commands will be blocked in all worlds.
+globals: ["gamemode"]
 worlds:
   world:
     gamemode:
@@ -24,5 +24,7 @@ worlds:
         interval: 1
         amount: 4
         action: ban
-  world1: ["gamemode", "about"]
+    teleport: []
+    help: []
+  world1: ["about"]
 ...
