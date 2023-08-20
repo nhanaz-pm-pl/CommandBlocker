@@ -5,4 +5,7 @@ branches:
 projects:
   CommandBlocker:
     path: ""
+    libs:
+      - src: JinodkDevTeam/Commando/Commando
+        version: ^3.2.0
 ...
