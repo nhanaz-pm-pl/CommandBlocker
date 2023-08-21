@@ -47,20 +47,13 @@ class ListSub extends BaseSubCommand {
                     $sender->sendMessage(self::translateString(LanguageEnums::DONT_HAVE_BLOCKER_COMMAND, [$command]));
                     return;
                 }
-                $amount = 0;
-                $time = 0;
-                $args = "None";
-                $aliases = "None";
-                if($commandBlocker->hasLimit()) {
-                    $amount = $commandBlocker->getLimit()->getAmount();
-                    $time = $commandBlocker->getLimit()->getInterval();
-                }
-                if(count($commandBlocker->getArguments()) > 0) {
-                    $args = implode(", ", $commandBlocker->getArguments());
-                }
-                if(count($commandBlocker->getAliases()) > 0) {
-                    $aliases = implode(", ", $commandBlocker->getAliases());
-                }
+                $limit = $commandBlocker->getLimit();
+                $amount = $limit ? $limit->getAmount() : 0;
+                $time = $limit ? $limit->getInterval() : 0;
+
+                $args = $commandBlocker->hasArguments() ? implode(", ", $commandBlocker->getArguments()) : "None";
+                $aliases = $commandBlocker->getAliases() > 0 ? implode(", ", $commandBlocker->getAliases()) : "None";
+
                 $sender->sendMessage(self::translateString(LanguageEnums::COMMAND_BLOCKED_NAME, [$command]));
                 $sender->sendMessage(self::translateString(LanguageEnums::COMMAND_BLOCKED_ARGS, [$args]));
                 $sender->sendMessage(self::translateString(LanguageEnums::COMMAND_BLOCKED_ALIAS, [$aliases]));
