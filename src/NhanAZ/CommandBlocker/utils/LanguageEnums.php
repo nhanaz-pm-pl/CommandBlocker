@@ -17,4 +17,8 @@ class LanguageEnums {
     public const COMMAND_BLOCKED_ALIAS = "command.blocked.alias";
     public const COMMAND_BLOCKED_LIMIT = "command.blocked.limit";
     public const DONT_HAVE_PERMISSION = "dont.have.permission";
+
+    public const LIMIT_ACTION_KICK = "limit.action.kick";
+    public const LIMIT_ACTION_BAN = "limit.action.ban";
+    public const LIMIT_ACTION_WARN = "limit.action.warn";
 }

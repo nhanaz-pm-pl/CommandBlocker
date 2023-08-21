@@ -23,19 +23,12 @@ class Utils {
             return null;
         }
         $commandBlockers = [];
-        foreach ($worlds[$world->getFolderName()] as $command => $data) {
+        foreach ($worlds[$world->getFolderName()] as $command => $blockerData) {
             if(is_int($command)) {
-                $command = $data;
-                $data = [];
+                $command = $blockerData;
+                $blockerData = [];
             }
-            $arguments = $data['arguments'] ?? null;
-            $limit = $data['limit'] ?? null;
-
-            if ($limit !== null) {
-                $limit = Limit::fromArray($limit);
-            }
-
-            $commandBlockers[] = new CommandBlocker($command, $arguments, $limit);
+            $commandBlockers[] = CommandBlocker::create($command, $blockerData);
         }
 
         return !empty($commandBlockers) ? WorldBlocker::fromArray($commandBlockers) : null;
@@ -68,6 +61,19 @@ class Utils {
             }
         }
         return $blockers;
+    }
+
+
+    /**
+     * @return CommandBlocker[]
+     */
+    public static function getGlobals(): array {
+        $config = Main::getInstance()->getConfig();
+        $globals = $config->get("globals");
+
+        return array_map(function ($command) {
+            return CommandBlocker::create($command);
+        }, $globals);
     }
 
 }
