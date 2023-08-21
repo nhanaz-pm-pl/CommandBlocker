@@ -8,7 +8,7 @@ use NhanAZ\CommandBlocker\Main;
 
 trait LanguageTrait {
 
-    public static function translateString(LanguageEnums $enums, array $args = []): string {
-        return Main::getInstance()->getLanguage()->translateString($enums->value, $args);
+    public static function translateString(string $enums, array $args = []): string {
+        return Main::getInstance()->getLanguage()->translateString($enums, $args);
     }
 }
