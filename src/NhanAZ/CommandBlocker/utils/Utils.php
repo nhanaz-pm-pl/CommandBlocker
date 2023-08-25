@@ -36,7 +36,7 @@ class Utils {
 
     public static function getWorldLoadedByName(string $name): ?World {
         $worldManager = Server::getInstance()->getWorldManager();
-        if($worldManager->loadWorld($name) !== null) {
+        if($worldManager->loadWorld($name)) {
             return $worldManager->getWorldByName($name);
         }
         return null;

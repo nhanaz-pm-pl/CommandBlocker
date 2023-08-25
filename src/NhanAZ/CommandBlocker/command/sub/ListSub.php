@@ -52,7 +52,7 @@ class ListSub extends BaseSubCommand {
                 $time = $limit ? $limit->getInterval() : 0;
 
                 $args = $commandBlocker->hasArguments() ? implode(", ", $commandBlocker->getArguments()) : "None";
-                $aliases = $commandBlocker->getAliases() > 0 ? implode(", ", $commandBlocker->getAliases()) : "None";
+                $aliases = count($commandBlocker->getAliases()) > 0 ? implode(", ", $commandBlocker->getAliases()) : "None";
 
                 $sender->sendMessage(self::translateString(LanguageEnums::COMMAND_BLOCKED_NAME, [$command]));
                 $sender->sendMessage(self::translateString(LanguageEnums::COMMAND_BLOCKED_ARGS, [$args]));
